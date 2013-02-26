@@ -1,0 +1,114 @@
+span.help-inline
+{   bottom: -22px;
+    left: -210px;
+    position: relative;
+}
+
+div.alert-success
+{   margin-top: 30px;
+}
+
+form.login-form 
+{   margin-top: 30px;
+}
+
+label.checkbox[for$="DELETE"]
+{   left: 210px;
+}
+
+input[id$="DELETE"]
+{   display: none;
+}
+
+div[id$="ORDER"] 
+{   display: none;
+}
+
+.navbar
+{   position: relative;
+}
+
+navbar
+{   position: relative;
+}
+
+#footer 
+{  position: absolute;
+   bottom: 0;
+   left: 200px; 
+}
+
+form ul
+{   list-style: none;
+    margin: 0;
+}
+
+label
+{   display: inline;
+}
+
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.progress
+{   margin: 10px;
+}
+
+input[type="text"], input[type="password"]
+{   height: 30px;
+}
+
+.asteriskField
+{   display: none;
+}
+
+label.checkbox, input.checkboxinput 
+{   left: 300px;
+    position: relative;
+    top: -35px;
+    color: red;
+}
+
+label.checkbox:hover
+{   font-weight: bold;
+}
+
+.control-group
+{   margin-bottom: 0;
+}
+
+.poll-form > input
+{   bottom: -30px;
+    left: -65px;
+    position: relative;
+}
+
+
+.poll-form 
+{   height: 100px;
+}
+
+.poll-form > label 
+{   font-size: larger;
+}
+
+.table td:first-child
+{   width: 35%;
+}
+
+.btn
+{   width: 100px;
+}
+
+input.btn[type="submit"], input.btn[type="button"]
+{       padding: 5px;
+        width: 125px;
+}
+
+form + a.btn
+{   left: 140px;
+    position: relative;
+    top: -55px;
+}
