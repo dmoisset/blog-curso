@@ -8,6 +8,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', include('cafeblog.urls', namespace="cafeblog")),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'cafeblog/login.html'}),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'cafeblog/logout.html'}),
 )
 
 urlpatterns += staticfiles_urlpatterns()
