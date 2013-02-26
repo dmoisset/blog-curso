@@ -1,4 +1,4 @@
-{% extends "polls/generic.html" %}
+{% extends "cafeblog/base.html" %}
 {% load url from future %}
 
 {% block body %}
@@ -10,7 +10,7 @@
   </div>
   {% endif %}
 
-    <form class="login-form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    <form class="login-form" method="post" action="">
       {% csrf_token %}
       <div class="control-group">
         {{ form.username.label_tag }}

@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'south',
     'debug_toolbar',
     'django_nose',
+    'bootstrap_toolkit',
     'django.contrib.admin',
     'django.contrib.admindocs',
 )
