@@ -1,0 +1,32 @@
+{% extends "polls/generic.html" %}
+{% load url from future %}
+
+{% block body %}
+
+  {% if form.errors %}
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Error!</strong> Your username and password didn't match. Please try again.
+  </div>
+  {% endif %}
+
+    <form class="login-form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+      {% csrf_token %}
+      <div class="control-group">
+        {{ form.username.label_tag }}
+        <div class="controls">
+        {{ form.username }}
+        </div>
+      </div>
+      <div class="control-group">
+        {{ form.password.label_tag }}
+        <div class="controls">
+          {{ form.password }}
+        </div>
+      </div>
+      <br/>
+      <input class="btn" type="submit" value="login" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+{% endblock %}
