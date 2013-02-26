@@ -119,10 +119,8 @@ INSTALLED_APPS = (
     'south',
     'debug_toolbar',
     'django_nose',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
