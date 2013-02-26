@@ -3,3 +3,4 @@
 build/
 *.db
 *.json
+cafeblog_com/local_settings.py
