@@ -1,12 +1,16 @@
+{% load bootstrap_toolkit %}
+{% load url from future %}
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap/bootstrap.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap/bootstrap-responsive.css" media="screen" />
+    
+
+    <title>{% block title %} Generic Template {% endblock %}</title>
+
+    {% bootstrap_stylesheet_tag %}
     {% block mycss %}
       <link rel="stylesheet" type="text/css" href="/static/css/cafeblog/pretty.css" media="screen" />
     {% endblock %}
-    <title>{% block title %} Generic Template {% endblock %}</title>
-    <style>{% block style %} {% endblock %}</style>
+
   </head>
   <body>
     {% block navbar %}
@@ -23,10 +27,10 @@
                 <p class="navbar-text pull-right dropdown">
                 {% if user.is_authenticated %}
                   Logged in as {{ user.username }} (<a
-                  href="/logout/">logout</a>)
+                  href="{% url 'cafeblog:logout' %}">logout</a>)
                 {% else %}
                   Not logged in (<a class="navbar-link"
-                  href="/login/">login</a>)
+                  href="{% url 'cafeblog:login' %}">login</a>)
                 {% endif %}
                 </p>
                 </ul>
@@ -51,7 +55,6 @@
     </div>
     {% block js %}
      <script src="http://code.jquery.com/jquery-latest.js"></script>
-     <script src="/static/js/bootstrap/bootstrap.min.js"></script>
       {% block myjs %}
       {% endblock %}
     {% endblock %}
