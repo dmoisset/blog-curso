@@ -4,10 +4,10 @@ from cafeblog import views
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
-    #Logueo y Deslogueo
+    # Logueo y Deslogueo
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'cafeblog/login.html'}, name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
-
+    # Password reset
     url(r'^user/password_reset/$', 
             'django.contrib.auth.views.password_reset', 
             {'post_reset_redirect' : '/user/password_reset/done/'},
@@ -25,4 +25,10 @@ urlpatterns = patterns('',
 
     url(r'^user/password_reset/complete/$', 
         'django.contrib.auth.views.password_reset_complete',),
+
+    # Blogs management
+    url(r'^new_blog/$', views.new_blog, name='new_blog'),
+    url(r'^new_blog/$', views.new_blog, name='new_blog'),
+    url(r'^(?P<blog_pk>\d+)/$', views.detail, name='detail'),
+
 )

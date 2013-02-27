@@ -22,7 +22,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </a>
-              <a href="" class="brand">Cuchuflito</a>
+              <a href="" class="brand">Cafe blogs</a>
               <div class="nav-collapse collapse">
                 <p class="navbar-text pull-right dropdown">
                 {% if user.is_authenticated %}
@@ -35,8 +35,8 @@
                 </p>
                 </ul>
                 <ul class="nav">
-                  <li class="active"><a href="">Home</a></li>
-                  <li><a href="">Something#1</a></li>
+                  <li class="active"><a href="/">Home</a></li>
+                  <li><a href="{% url 'cafeblog:new_blog' %}">New blog</a></li>
                   <li><a href="">Something#2</a></li>
                   <li><a href="">Something#3</a></li>
                   {% block nav %}

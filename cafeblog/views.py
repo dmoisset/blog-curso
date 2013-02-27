@@ -1,13 +1,24 @@
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import permission_required
-from django.forms.models import inlineformset_factory
-from django.views.generic import ListView, FormView, TemplateView
-from django.utils.decorators import method_decorator
+from django.views.generic import ListView, CreateView, DetailView
+
+from cafeblog.models import Blog
 
 
-
-
-class Index(TemplateView):
+class Index(ListView):
+    model = Blog
     template_name = 'cafeblog/index.html'
 index = Index.as_view()
+
+
+class NewBlog(CreateView):
+    #context_object_name = 'blog'
+    pk_url_kwarg = 'blog_pk'
+    model = Blog
+new_blog = NewBlog.as_view()
+
+
+class BlogDetails(DetailView):
+    context_object_name = 'blog'
+    pk_url_kwarg = 'blog_pk'
+    model = Blog
+detail = BlogDetails.as_view()
