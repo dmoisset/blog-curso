@@ -7,7 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('cafeblog.urls', namespace="cafeblog")),
+    url(r'^cafeblog/', include('cafeblog.urls', namespace="cafeblog")),
 )
 
 urlpatterns += staticfiles_urlpatterns()
