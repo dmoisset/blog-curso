@@ -109,13 +109,13 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'cafeblog',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cafeblog',
     'south',
     'debug_toolbar',
     'django_nose',
