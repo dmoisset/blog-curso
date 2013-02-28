@@ -35,7 +35,7 @@ class CafeBlogViewsTest(TestCase):
         users_count = User.objects.all().count()
         response = self.client.post(url, post_data)
 
-        url = reverse('cafeblog:index')
+        url = reverse('cafeblog:login')
         self.assertRedirects(response, url)
         self.assertEqual(User.objects.all().count(), users_count + 1)
 
