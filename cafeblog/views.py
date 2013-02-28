@@ -20,9 +20,6 @@ class NewBlog(CreateView):
     model = Blog
     form_class = NewBlogForm
 
-    def get_form(self, form_class):
-        return super(NewBlog, self).get_form(form_class)
-
     def form_valid(self, form):
         user = User.objects.get(pk=self.request.user.pk)
         blog = Blog(
