@@ -64,3 +64,14 @@ class CafeBlogViewsTest(TestCase):
 
     def tearDown(self):
         clear_db()
+
+
+class NewBlogViewTest(TestCase):
+    def test_get_new_blog_view_login_required(self):
+        url = reverse('cafeblog:new_blog')
+        redirect_url = '{0}?next={1}'.format(reverse('cafeblog:login'), url)
+        response = self.client.get(url)
+        self.assertRedirects(response, redirect_url)
+
+    def tearDown(self):
+        clear_db()
