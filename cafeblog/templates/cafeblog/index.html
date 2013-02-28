@@ -1,28 +1,9 @@
 {% extends "cafeblog/base.html" %}
-{% load url from future %}
+{% load staticfiles %}
 
 {% block body %}
-{% if object_list %}
-<table class="table table-striped table-bordered">
-    <thead class="">
-        <tr>
-            <th>Blog</th>
-            <th>description</th>
-            <th>by</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for blog in object_list %}
-        <tr>
-            <td>{{ blog.title }}</td>
-            <td>{{ blog.description }}</td>
-            <td>{{ blog.administrator }}</td>
-        </tr>
-    {% endfor %}
-    <tbody>
-</table>
-{% else %}
-    <p>No blogs available.</p>
-{% endif %}
-
+<div class="image">
+    <img src="{% static 'img/cafeblog.jpg' %}" alt="Cafe Blog"> 
+    <h2><span class="cafeblog_tit">Cafe Blog</span></h2> 
+</div> 
 {% endblock %}
