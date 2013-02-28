@@ -4,16 +4,18 @@ from django.http import HttpResponseRedirect
 from cafeblog.forms import NewBlogForm
 from cafeblog.models import Blog
 from django.contrib.auth.models import User
+from django.shortcuts import redirect
+from django.views.generic import FormView, TemplateView
+
+from cafeblog.forms import SignUpForm
 
 
-class Index(ListView):
-    model = Blog
+class Index(TemplateView):
     template_name = 'cafeblog/index.html'
 index = Index.as_view()
 
 
 class NewBlog(CreateView):
-    #context_object_name = 'blog'
     pk_url_kwarg = 'blog_pk'
     model = Blog
     form_class = NewBlogForm
@@ -42,3 +44,16 @@ class BlogDetails(DetailView):
     pk_url_kwarg = 'blog_pk'
     model = Blog
 detail = BlogDetails.as_view()
+
+
+class SignUp(FormView):
+    form_class = SignUpForm
+    template_name = 'cafeblog/signup.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.set_password(form.cleaned_data['password'])
+        user.save()
+        return redirect('cafeblog:index')
+signup = SignUp.as_view()
