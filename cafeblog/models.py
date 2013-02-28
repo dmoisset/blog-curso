@@ -4,25 +4,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
-ZODIAC_SIGN_CHOICES = (
-    ('AR', 'Aries'),
-    ('TA', 'Taurus'),
-    ('GE', 'Gemini'),
-    ('CA', 'Cancer'),
-    ('LE', 'Leo'),
-    ('VI', 'Virgo'),
-    ('LI', 'Libra'),
-    ('SC', 'Scorpio'),
-    ('SA', 'Sagittarius'),
-    ('CP', 'Capricorn'),
-    ('AQ', 'Aquarius'),
-    ('PI', 'Pisces'),
-)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    zodiac_sign = models.CharField(max_length=2, choices=ZODIAC_SIGN_CHOICES)
-    favorite_color = models.CharField(max_length=25, default="Green.")
+    name = models.CharField(max_length=45, blank=True)
+    last_name = models.CharField(max_length=45, blank=True)
+    biography = models.TextField(blank=True)
+    photo = models.FileField(upload_to="profile_pictures", blank=True)
 
 
 def create_user_profile(sender, instance, created, **kwargs):
