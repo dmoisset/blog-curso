@@ -1,0 +1,33 @@
+{% extends "cafeblog/base.html" %}
+{% load staticfiles %}
+{% load bootstrap_toolkit %}
+{% load url from future %}
+    
+
+{% block body %}  
+    <form action="" method="post">
+    {% csrf_token %}     
+    <div>
+        <h4 class="txt_sign_up">Sign Up is for free!</h4>
+    </div> 
+    <div class="row pull-right" >
+        <div class="row_field span3 ">
+            <div class="error_field">{{ form.username.errors }}</div>
+            <div class="ind_field">{{ form.username }}</div>
+        </div>
+        <div class="row_field span3" >
+            <div class="error_field">{{ form.email.errors }}</div>
+            <div class="ind_field"> {{ form.email }}</div>
+        </div>
+        <div class="row_field span3 " >
+            <div class="error_field">{{ form.password.errors }}{{ form.non_field_errors }}</div>
+            <div class="ind_field"> {{ form.password }}</div>
+        </div>
+        <div class="row_field span3 " >
+            <div class="error_field">{{ form.password2.errors }} </div>
+            <div class="ind_field">  {{ form.password2 }}</div>
+        </div>
+        <div class="row_field span3" > <button class="btn btn-info" type="submit">Sign Up</button>  </div>
+    </div>
+    </form>
+{% endblock %}
