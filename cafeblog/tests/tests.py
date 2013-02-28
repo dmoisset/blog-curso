@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from model_factories import UserFactory, BlogFactory
 
 
 def clear_db():
@@ -67,7 +68,27 @@ class CafeBlogViewsTest(TestCase):
 
 
 class NewBlogViewTest(TestCase):
+    def setUp(self):
+        """
+        Create a logged in user
+        """
+        self.logged_user = UserFactory(password='testpass')
+        self.client.login(username=self.logged_user.username,
+                          password='testpass')
+
+    def test_get_new_blog_view(self):
+        """
+        Expect 200 status code for a logged in user
+        """
+        url = reverse('cafeblog:new_blog')
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
     def test_get_new_blog_view_login_required(self):
+        """
+        Login required when creating a new blog
+        """
+        self.client.logout()  # Ensure we are logged out
         url = reverse('cafeblog:new_blog')
         redirect_url = '{0}?next={1}'.format(reverse('cafeblog:login'), url)
         response = self.client.get(url)
