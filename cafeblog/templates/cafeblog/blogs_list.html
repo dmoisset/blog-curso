@@ -1,0 +1,29 @@
+{% extends "cafeblog/base.html" %}
+{% load staticfiles %}
+{% load bootstrap_toolkit %}
+{% load url from future %}
+    
+{% block title %} Blogs List {% endblock %}
+{% block body %}      
+    <div>
+        <h4 class="txt_sign_up">Blogs List</h4>
+    </div> 
+    <table class="table table-bordered">
+        {% for blog in blogs_list %}
+            <tr>
+                <td><strong>{{ blog.title }}</strong></td>
+                <td>
+                    {% if blog.administrator == user %}
+                        <span class="text-success">Administrator.</span>
+                    {% else %}
+                        <span class="text-info">Only Author.</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td><strong>Were not found blogs.</strong></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

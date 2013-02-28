@@ -5,9 +5,11 @@ from cafeblog.forms import NewBlogForm
 from cafeblog.models import Blog
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
-from django.views.generic import FormView, TemplateView
+from django.contrib.auth.decorators import login_required
+from django.views.generic import FormView, TemplateView, ListView
 
 from cafeblog.forms import SignUpForm
+from cafeblog.models import Blog
 
 
 class Index(TemplateView):
@@ -54,3 +56,11 @@ class SignUp(FormView):
         user.save()
         return redirect('cafeblog:index')
 signup = SignUp.as_view()
+
+
+class BlogList(ListView):
+    def get_queryset(self, **kwargs):
+        return Blog.objects.filter(authors=self.request.user)
+    context_object_name = 'blogs_list'
+    template_name = 'cafeblog/blogs_list.html'
+blogs_list = login_required(BlogList.as_view())

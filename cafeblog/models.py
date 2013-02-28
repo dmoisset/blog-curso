@@ -18,7 +18,6 @@ class Blog(models.Model):
         return reverse('cafeblog:detail', kwargs={'blog_pk': self.pk})
 
 
-
 class Post(models.Model):
     """A Post in some blog"""
     blog = models.ForeignKey(Blog) #13
