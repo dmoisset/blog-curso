@@ -99,5 +99,17 @@ class NewBlogViewTest(TestCase):
         response = self.client.get(url)
         self.assertRedirects(response, redirect_url)
 
+    def test_post_new_blog(self):
+        """
+        Creating a new blog should assing the current user as admin and author
+        """
+        url = reverse('cafeblog:new_blog')
+        self.client.post(url, {'title': 'Test blog',
+                                        'description': 'Test description'})
+        blog = self.logged_user.blog_set.get(title='Test blog',
+                                             description='Test description')
+        self.assertEquals(blog.administrator.pk, self.logged_user.pk)
+        self.assertEquals(blog.authors.get(pk=self.logged_user.pk).pk, self.logged_user.pk)
+
     def tearDown(self):
         clear_db()
