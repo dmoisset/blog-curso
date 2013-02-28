@@ -4,7 +4,7 @@
   <head>
     
 
-    <title>{% block title %} Generic Template {% endblock %}</title>
+    <title>{% block title %} Cafe Blog {% endblock %}</title>
 
     {% bootstrap_stylesheet_tag %}
     {% block mycss %}
@@ -35,10 +35,13 @@
                 </p>
                 </ul>
                 <ul class="nav">
-                  <li class="active"><a href="">Home</a></li>
-                  <li><a href="">Something#1</a></li>
-                  <li><a href="">Something#2</a></li>
-                  <li><a href="">Something#3</a></li>
+                  {% if user.is_authenticated %}
+                  <li class="dropdown"><a href=""class="dropdown-toggle" data-toggle="dropdown">Blogs</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'cafeblog:blogs_list' %}" >My Blogs</a></li>  
+                    </ul>
+                  </li>
+                  {% endif %}
                   {% block nav %}
                   {% endblock nav %}
                 </ul>
@@ -60,7 +63,8 @@
       </footer>
 
     {% block js %}
-     <script src="http://code.jquery.com/jquery-latest.js"></script>
+      <script src="http://code.jquery.com/jquery-latest.js"></script>
+      <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
       {% block myjs %}
       {% endblock %}
     {% endblock %}

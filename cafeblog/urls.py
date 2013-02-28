@@ -5,6 +5,7 @@ from cafeblog import views
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
     url(r'signup/$', views.signup, name='signup'),
+    url(r'blogs_list/$', views.blogs_list, name='blogs_list'),
 
     #Logueo y Deslogueo
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'cafeblog/login.html'}, name='login'),
