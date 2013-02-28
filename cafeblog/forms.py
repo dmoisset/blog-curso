@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from cafeblog.models import Blog
 from django.contrib.auth.models import User
 
 
@@ -37,3 +38,9 @@ class SignUpForm(forms.ModelForm):
         if password != password2:
             raise forms.ValidationError("Passwords entered do not match")
         return self.cleaned_data
+
+
+class NewBlogForm(forms.ModelForm):
+    class Meta:
+        model = Blog
+        fields = ('title', 'description',)

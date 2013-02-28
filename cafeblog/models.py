@@ -1,8 +1,7 @@
-import datetime
-from django.utils import timezone
 from django.db import models
-from django.db.models import Sum, Avg
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+
 
 class Blog(models.Model):
     """A Blog to post stuff"""
@@ -17,3 +16,9 @@ class Blog(models.Model):
 
     def get_absolute_url(self):
         return reverse('cafeblog:detail', kwargs={'blog_pk': self.pk})
+
+
+class Post(models.Model):
+    """A Post in some blog"""
+    blog = models.ForeignKey(Blog) #13
+    #20: titulo, contenido, autor, fecha de publicacion, fecha del ultimo cambio y etiquetas

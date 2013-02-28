@@ -28,4 +28,10 @@ urlpatterns = patterns('',
 
     url(r'^user/password_reset/complete/$',
         'django.contrib.auth.views.password_reset_complete',),
+
+    # Blogs management
+    url(r'^new_blog/$', views.new_blog, name='new_blog'),
+    url(r'^new_blog/$', views.new_blog, name='new_blog'),
+    url(r'^(?P<blog_pk>\d+)/$', views.detail, name='detail'),
+
 )
