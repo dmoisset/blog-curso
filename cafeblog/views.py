@@ -5,6 +5,7 @@ from cafeblog.forms import NewBlogForm
 from cafeblog.models import Blog
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import FormView, TemplateView, ListView
 
@@ -54,7 +55,12 @@ class SignUp(FormView):
         user = form.save(commit=False)
         user.set_password(form.cleaned_data['password'])
         user.save()
-        return redirect('cafeblog:index')
+
+        messages.add_message(self.request,
+            messages.INFO,
+            u'Sign Up Success. Please Login and enjoy the CafeBlog.'
+        )
+        return redirect('cafeblog:login')
 signup = SignUp.as_view()
 
 
