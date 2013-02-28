@@ -84,6 +84,11 @@ class NewBlogViewTest(TestCase):
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
+    def test_new_blog_template_used(self):
+        url = reverse('cafeblog:new_blog')
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'cafeblog/blog_form.html')
+
     def test_get_new_blog_view_login_required(self):
         """
         Login required when creating a new blog
