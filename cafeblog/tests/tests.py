@@ -99,6 +99,16 @@ class NewBlogViewTest(TestCase):
         response = self.client.get(url)
         self.assertRedirects(response, redirect_url)
 
+    def test_post_new_blog_view_login_required(self):
+        """
+        Login required when creating a new blog
+        """
+        self.client.logout()  # Ensure we are logged out
+        url = reverse('cafeblog:new_blog')
+        redirect_url = '{0}?next={1}'.format(reverse('cafeblog:login'), url)
+        response = self.client.post(url)
+        self.assertRedirects(response, redirect_url)
+
     def test_post_new_blog(self):
         """
         Creating a new blog should assing the current user as admin and author
