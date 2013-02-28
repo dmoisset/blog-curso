@@ -1,53 +1,9 @@
-span.help-inline
-{   bottom: -22px;
 
-    position: relative;
-}
 
-div.alert-success
-{   margin-top: 30px;
-}
-
-form.login-form 
-{   margin-top: 30px;
-}
-
-label.checkbox[for$="DELETE"]
-{   left: 210px;
-}
-
-input[id$="DELETE"]
-{   display: none;
-}
-
-div[id$="ORDER"] 
-{   display: none;
-}
-
-.navbar
-{   position: relative;
-}
-
-navbar
-{   position: relative;
-}
-
-footer {
-    vertical-align: middle;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    right: 0;
-}
-
-form ul
-{   list-style: none;
-    margin: 0;
-}
-
-label
-{   display: inline;
+div.alert
+{   margin-top: 45px;
+    margin-bottom: 0px;
+    padding: 6px;
 }
 
 .table td {
@@ -55,55 +11,15 @@ label
     vertical-align: middle;
 }
 
-.progress
-{   margin: 10px;
-}
-
 input[type="text"], input[type="password"]
 {   height: 30px;
 }
 
-.asteriskField
-{   display: none;
+li {
+ list-style: none;
 }
-
-label.checkbox, input.checkboxinput 
-{   left: 300px;
-    position: relative;
-    top: -35px;
-    color: red;
-}
-
-label.checkbox:hover
-{   font-weight: bold;
-}
-
-.control-group
-{   margin-bottom: 0;
-}
-
-
-
-.table td:first-child
-{   width: 35%;
-}
-
-.btn
-{   width: 100px;
-}
-
-input.btn[type="submit"], input.btn[type="button"]
-{       padding: 5px;
-        width: 125px;
-}
-
-
-
-#wrap {
-    margin-top: 50px;
-}
-
 .container{
+   margin-top: 50px;
    width: 80%;
 }
 
@@ -122,4 +38,26 @@ input.btn[type="submit"], input.btn[type="button"]
 
 }
 
-
+.image{
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+h2{
+    position: absolute;
+    top: 380px;
+    left: 0;
+    width: 100%;
+}
+h2 span{
+    color: white;
+    font: bold 40px/75px Helvetica, Sans-Serif;
+    letter-spacing: -1px;  
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+}
+h2 span.spacer{
+    padding: 0 2px;
+    background: none;
+}
