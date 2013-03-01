@@ -34,6 +34,7 @@ class Article(models.Model):
     def __unicode__(self):
         return self.title
 
+
     class Meta:
         ordering = ['-pub_date']
         order_with_respect_to = 'blog'

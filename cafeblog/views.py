@@ -89,6 +89,7 @@ class PaginateArticleList(ArchiveIndexView):
 archive = PaginateArticleList.as_view()
 
 
+
 NO_UNIQUE_TITLE_ERROR = "Such article's title already exist in this blog."
 @login_required
 def edit_article(request, blog_pk, article_pk=None):
