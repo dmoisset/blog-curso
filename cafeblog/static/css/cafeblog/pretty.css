@@ -1,3 +1,11 @@
+textarea[name="biography"]
+{   width: 530px;
+}
+
+p > label 
+{   display: block;
+}
+
 span.help-inline
 {   bottom: -22px;
     left: -210px;
@@ -111,4 +119,40 @@ form + a.btn
 {   left: 140px;
     position: relative;
     top: -55px;
+}
+
+.profile-table 
+{   margin-top: 40px;
+    width: 600px;
+}
+
+.profile-table td 
+{   color: graytext;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.profile-table td:first-child 
+{   width: 65%;
+}
+
+.img-polaroid
+{   width: 192px;
+}
+
+label[for|="photo"]
+{   left: 250px;
+    position: relative;
+    top: -20px;
+}
+
+
+input[name|="photo"] {
+    left: 17px;
+    position: relative;
+    top: -3px;
+}
+
+.profile-form {
+    margin-top: 30px;
 }
