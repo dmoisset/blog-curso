@@ -13,7 +13,7 @@ urlpatterns = patterns('',
 
     #Logueo y Deslogueo
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'cafeblog/login.html'}, name='login'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/cafeblog'}, name='logout'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
 
     url(r'^user/password_reset/$',
             'django.contrib.auth.views.password_reset',
@@ -34,7 +34,6 @@ urlpatterns = patterns('',
         'django.contrib.auth.views.password_reset_complete',),
 
     # Blogs management
-    url(r'^new_blog/$', views.new_blog, name='new_blog'),
     url(r'^new_blog/$', views.new_blog, name='new_blog'),
     url(r'^(?P<blog_pk>\d+)/$', views.detail, name='detail'),
 

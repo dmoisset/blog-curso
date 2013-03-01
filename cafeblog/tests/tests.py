@@ -183,14 +183,10 @@ class ProfileViewTest(TestCase):
         user.save()
         self.assertIsInstance(user.get_profile(), UserProfile)
 
-    #"Uso el template cafeblog/profile.html"
-
     def test_get_profile_view(self):
-
+        """Logged-in user accessing cafeblog:profile is shown cafeblog/profile.html"""
         url = reverse('cafeblog:profile')
         response = self.client.get(url)
-
-        print response
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'cafeblog/profile.html')
 
