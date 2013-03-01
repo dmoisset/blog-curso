@@ -1,0 +1,50 @@
+{% extends "cafeblog/base.html" %}
+{% load staticfiles %}
+{% load bootstrap_toolkit %}
+{% load url from future %}
+    
+{% block title %} Blogs List {% endblock %}
+{% block body %}      
+    <div>
+        <h4 class="txt_sign_up">Blogs List</h4>
+    </div> 
+    <table class="table table-bordered">
+        {% for blog in blogs_list %}
+            <tr>
+                <td><strong><a href='{% url "cafeblog:detail" blog.pk %}'>{{ blog.title }}</a></strong></td>
+                <td>
+                    {% if blog.administrator == user %}
+                        <span class="text-success">Administrator.</span>
+                    {% else %}
+                        <span class="text-info">Only Author.</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td><strong>Were not found blogs.</strong></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if is_paginated %}
+        <div class="pagination">
+            <ul>
+                {% if page_obj.has_previous %}
+                <li> <a href="?page={{ page_obj.previous_page_number }}">&laquo; previous</a> </li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %} 
+                    <li class="disabled"><a> {{ page_obj.number }} </a></li>                     
+                    {% else %}
+                        <li> <a href="?page={{ page_obj.next_page_number }}"> {{ i }} </a> </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li> <a href="?page={{ page_obj.next_page_number }}">next &raquo;</a> </li>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+
+{% endblock %}

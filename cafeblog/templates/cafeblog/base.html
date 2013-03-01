@@ -1,12 +1,12 @@
 {% load bootstrap_toolkit %}
+{% load staticfiles %}
 {% load url from future %}
 <html>
   <head>
-    
-
-    <title>{% block title %} Generic Template {% endblock %}</title>
+    <title>{% block title %} Cafe Blog {% endblock %}</title>
 
     {% bootstrap_stylesheet_tag %}
+
     {% block mycss %}
       <link rel="stylesheet" type="text/css" href="/static/css/cafeblog/pretty.css" media="screen" />
     {% endblock %}
@@ -14,47 +14,61 @@
   </head>
   <body>
     {% block navbar %}
-      <div class="navbar navbar-inverse navbar-fixed-top">
-          <div class="navbar-inner">
-            <div class="container-fluid">
-              <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </a>
-              <a href="" class="brand">Cuchuflito</a>
-              <div class="nav-collapse collapse">
-                <p class="navbar-text pull-right dropdown">
-                {% if user.is_authenticated %}
-                Logged in as <a href="/cafeblog/profile/">{{ user.username }}</a> (<a
-                  href="{% url 'cafeblog:logout' %}">logout</a>)
-                {% else %}
-                  Not logged in (<a class="navbar-link"
-                  href="{% url 'cafeblog:login' %}">login</a>)
-                {% endif %}
-                </p>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a href="{% url 'cafeblog:index' %}" class="brand">CafeBlog</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right dropdown">
+              {% if user.is_authenticated %}
+              Logged in as <a href="/cafeblog/profile/">{{ user.username }}</a> (<a
+                href="{% url 'cafeblog:logout' %}">logout</a>)
+              {% else %}
+              <a class="btn btn-success btn-small" href="{% url 'cafeblog:login' %}">login</a> or
+              <a class="btn btn-info btn-small" href="{% url 'cafeblog:signup' %}">SignUp</a>
+              {% endif %}
+            </p>
+            </ul>
+            <ul class="nav">
+              {% if user.is_authenticated %}
+              <li class="dropdown"><a href=""class="dropdown-toggle" data-toggle="dropdown">Blogs</a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'cafeblog:blogs_list' %}" >My Blogs</a></li> 
+                    <li><a href="{% url 'cafeblog:new_blog' %}">New Blog</a></li> 
                 </ul>
-                <ul class="nav">
-                  <li class="active"><a href="/cafeblog/">Home</a></li>
-                  <li><a href="">Something#1</a></li>
-                  <li><a href="">Something#2</a></li>
-                  <li><a href="">Something#3</a></li>
-                  {% block nav %}
-                  {% endblock nav %}
-                </ul>
-              </div>
-            </div>
+              </li>
+              {% endif %}
+              {% block nav %}
+              {% endblock nav %}
+            </ul>
+          </div>
         </div>
-      {% endblock navbar %}
- 
+      </div>
+    </div>
+    {% endblock navbar %}    
+    {% if messages %}
+      <div class="alert alert-success">
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+      </div>
+    {% endif %}
     <div id="wrap">
       <div class="container">
         {% block body %}
+          
         {% endblock %}
       </div>
     </div>
+
     {% block js %}
-     <script src="http://code.jquery.com/jquery-latest.js"></script>
+      <script src="http://code.jquery.com/jquery-latest.js"></script>
+      <script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
       {% block myjs %}
       {% endblock %}
     {% endblock %}

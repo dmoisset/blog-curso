@@ -1,0 +1,15 @@
+{% extends "cafeblog/base.html" %}
+{% load url from future %}
+{% load bootstrap_toolkit %}
+
+{% block body %}
+<div class="hero-unit">
+    <h1>{{ blog }} <small>by {{ blog.administrator }}</small></h1>
+</div>
+
+<p>
+    {{ blog.description }}
+</p>
+
+{% endblock %}
+

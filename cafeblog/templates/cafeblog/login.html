@@ -1,27 +1,24 @@
 {% extends "cafeblog/base.html" %}
 {% load url from future %}
+{% load cafeblog_tags %}
+
 
 {% block title %} Login {% endblock %}
 
 {% block body %}
-
-  {% if form.errors %}
-  <div class="alert alert-error">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Error!</strong> Your username and password didn't match. Please try again.
-  </div>
-  {% endif %}
-
+    {% display_error_if  form.errors %}
     <form class="login-form" method="post" action="">
       {% csrf_token %}
       <div class="control-group">
         {{ form.username.label_tag }}
+        {{ form.username.errors }}
         <div class="controls">
         {{ form.username }}
         </div>
       </div>
       <div class="control-group">
         {{ form.password.label_tag }}
+        {{ form.password.errors }}
         <div class="controls">
           {{ form.password }}
         </div>
@@ -30,5 +27,9 @@
       <input class="btn" type="submit" value="login" />
       <input type="hidden" name="next" value="{{ next }}" />
     </form>
-
+<p>
+  <small>
+    If you can't remember it, <a href="{% url 'cafeblog:password_reset' %}">click here</a> to reset your password.
+  </small>
+</p>
 {% endblock %}

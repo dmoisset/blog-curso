@@ -28,31 +28,10 @@ input[id$="DELETE"]
 {   display: none;
 }
 
-div[id$="ORDER"] 
-{   display: none;
-}
-
-.navbar
-{   position: relative;
-}
-
-navbar
-{   position: relative;
-}
-
-#footer 
-{  position: absolute;
-   bottom: 0;
-   left: 200px; 
-}
-
-form ul
-{   list-style: none;
-    margin: 0;
-}
-
-label
-{   display: inline;
+div.alert
+{   margin-top: 45px;
+    margin-bottom: 0px;
+    padding: 6px;
 }
 
 .table td {
@@ -60,63 +39,34 @@ label
     vertical-align: middle;
 }
 
-.progress
-{   margin: 10px;
-}
-
 input[type="text"], input[type="password"]
 {   height: 30px;
 }
 
-.asteriskField
-{   display: none;
+li {
+ list-style: none;
+}
+.container{
+   margin-top: 50px;
+   width: 80%;
 }
 
-label.checkbox, input.checkboxinput 
-{   left: 300px;
-    position: relative;
-    top: -35px;
+.row_field{
+    height: 50px;
+}
+.error_field{
+     height: 15px;
+}
+.ind_field{
+    height: 25px;
+}
+.errorlist {
+    font-size: 11;
     color: red;
+
 }
 
-label.checkbox:hover
-{   font-weight: bold;
-}
-
-.control-group
-{   margin-bottom: 0;
-}
-
-.poll-form > input
-{   bottom: -30px;
-    left: -65px;
-    position: relative;
-}
-
-
-.poll-form 
-{   height: 100px;
-}
-
-.poll-form > label 
-{   font-size: larger;
-}
-
-.table td:first-child
-{   width: 35%;
-}
-
-.btn
-{   width: 100px;
-}
-
-input.btn[type="submit"], input.btn[type="button"]
-{       padding: 5px;
-        width: 125px;
-}
-
-form + a.btn
-{   left: 140px;
+.image{
     position: relative;
     top: -55px;
 }
@@ -155,4 +105,24 @@ input[name|="photo"] {
 
 .profile-form {
     margin-top: 30px;
+}
+
+h2{
+    position: absolute;
+    top: 380px;
+    left: 0;
+    width: 100%;
+}
+
+h2 span{
+    color: white;
+    font: bold 40px/75px Helvetica, Sans-Serif;
+    letter-spacing: -1px;  
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+}
+h2 span.spacer{
+    padding: 0 2px;
+    background: none;
 }
