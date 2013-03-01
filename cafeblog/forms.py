@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from models import UserProfile
 from django import forms
-from cafeblog.models import Blog
+from cafeblog.models import Blog, Article
 from django.contrib.auth.models import User
 
 
@@ -52,3 +52,8 @@ class NewBlogForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ('title', 'description',)
+
+class ArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        exclude = ('author', 'blog', 'pub_date', 'creation_time', 'last_modified')

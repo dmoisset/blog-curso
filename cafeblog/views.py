@@ -1,17 +1,17 @@
-from django.contrib.auth.decorators import login_required
-from django.views.generic import FormView, ListView, TemplateView, CreateView, DetailView, ArchiveIndexView
-from django.http import HttpResponseRedirect
-from cafeblog.forms import NewBlogForm
-from cafeblog.models import Blog
-from django.contrib.auth.models import User
-from django.shortcuts import redirect, get_object_or_404, render_to_response
 from django.contrib import messages
-from forms import ProfileForm
-from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import redirect, get_object_or_404, render_to_response
+from django.template.response import TemplateResponse
+from django.utils import timezone
+from django.views.generic import FormView, ListView, TemplateView, CreateView, DetailView, ArchiveIndexView
+from django.db import IntegrityError
 from django.template import RequestContext
-from models import UserProfile
 
-
+from cafeblog.forms import NewBlogForm, ArticleForm, ProfileForm
+from cafeblog.models import Blog, Article, UserProfile
 from cafeblog.forms import SignUpForm
 
 
@@ -105,14 +105,85 @@ class BlogList(ListView):
 blogs_list = login_required(BlogList.as_view())
 
 
-class PaginatePostList(ArchiveIndexView):
+class PaginateArticleList(ArchiveIndexView):
     paginate_by = ARTICLE_PAGINATE_BY
-    date_field = 'pub_date'
+    date_field = 'creation_time'
     template_name = 'cafeblog/blog_archive.html'
     allow_empty = True
 
     def get_queryset(self):
         b = get_object_or_404(Blog, pk=self.kwargs['blog_pk'])
-        return b.post_set.all().order_by('-pub_date')
+        return b.article_set.all().order_by('-creation_time')
 
-archive = PaginatePostList.as_view()
+archive = PaginateArticleList.as_view()
+
+
+
+NO_UNIQUE_TITLE_ERROR = "Such article's title already exist in this blog."
+@login_required
+def edit_article(request, blog_pk, article_pk=None):
+    if blog_pk is None:
+        raise Http404(u"No blog specified.")
+    blog = get_object_or_404(Blog, pk=blog_pk)
+    author = User.objects.get(pk=request.user.pk)
+    if author != blog.administrator and author not in blog.authors.all():
+        raise PermissionDenied
+
+    article = None
+    if article_pk:
+        article = get_object_or_404(Article, pk=article_pk)
+        # TODO: check permissions and authoring
+        #if article.created_by != request.user:
+        #    raise PermissionDenied
+
+    if request.method == "POST":
+        article_form = ArticleForm(request.POST, instance=article)
+        if article_form.is_valid():
+            author = User.objects.get(pk=request.user.pk)
+            now = timezone.now()
+            publish = article_form.cleaned_data['is_published']
+            pub_date = publish and now or None
+            article = Article(
+                    blog = blog,
+                    title = article_form.cleaned_data['title'],
+                    contents = article_form.cleaned_data['contents'],
+                    pub_date = pub_date,
+                    creation_time = now,
+                    last_modified = now,
+                    is_published = publish,
+                    author = author,
+                )
+            try:
+                #import pdb; pdb.set_trace()
+                article.save()
+                blog.article_set.add(article)
+                author.article_set.add(article)
+                return redirect('cafeblog:article_detail', blog_pk=blog.pk, article_pk=article.pk)
+            except IntegrityError, e:
+                article_form = ArticleForm(instance=article)
+                article_form.errors['title'] = [NO_UNIQUE_TITLE_ERROR]
+    else:
+        article_form = ArticleForm(instance=article)
+    #
+    return TemplateResponse(
+            request,
+            "cafeblog/article_form.html",
+            {'blog_pk':blog.pk, 'blog':blog, "article_form":article_form}
+        )
+
+
+def article_detail(request, blog_pk, article_pk):
+    #TODO: check blog_pk and article_pk corresponds
+    article = get_object_or_404(Article, pk=article_pk)
+
+    # TODO: check permissions and authoring
+    #if article.created_by != request.user:
+    #    raise PermissionDenied
+
+    if request.method == "GET":
+        article_form = ArticleForm(instance=article)
+    return TemplateResponse(
+            request,
+            "cafeblog/article_detail.html",
+            {"article":article}
+        )
