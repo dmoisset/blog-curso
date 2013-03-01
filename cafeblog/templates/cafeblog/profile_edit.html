@@ -5,13 +5,6 @@
 
 {% block body %}
 
-  {% if profile_form.errors %}
-  <div class="alert alert-error">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Error!</strong> Your username and password didn't match. Please try again.
-  </div>
-  {% endif %}
-
     <form class="form profile-form" method="post" action="" enctype="multipart/form-data">
       {% csrf_token %}
       {{ profile_form.as_p }}

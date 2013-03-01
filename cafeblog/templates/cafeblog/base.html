@@ -26,7 +26,7 @@
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right dropdown">
               {% if user.is_authenticated %}
-              Logged in as <a href="/cafeblog/profile/">{{ user.username }}</a> (<a
+              Logged in as <a href="{% url 'cafeblog:profile' %}">{{ user.username }}</a> (<a
                 href="{% url 'cafeblog:logout' %}">logout</a>)
               {% else %}
               <a class="btn btn-success btn-small" href="{% url 'cafeblog:login' %}">login</a> or

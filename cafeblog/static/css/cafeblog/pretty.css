@@ -1,3 +1,7 @@
+img[alt="Cafe Blog"] 
+{  margin-top: 90px;
+}
+
 textarea[name="biography"]
 {   width: 530px;
 }
@@ -91,7 +95,7 @@ li {
 }
 
 label[for|="photo"]
-{   left: 250px;
+{   left: 263px;
     position: relative;
     top: -20px;
 }
