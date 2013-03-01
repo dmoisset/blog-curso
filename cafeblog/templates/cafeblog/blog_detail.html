@@ -5,6 +5,7 @@
 {% block body %}
 <div class="hero-unit">
     <h1>{{ blog }} <small>by {{ blog.administrator }}</small></h1>
+	<a href="{% url "cafeblog:archive" blog.pk %}">All articles</a>
 </div>
 
 <p>

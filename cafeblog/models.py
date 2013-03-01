@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -21,4 +22,9 @@ class Blog(models.Model):
 class Post(models.Model):
     """A Post in some blog"""
     blog = models.ForeignKey(Blog) #13
+    pub_date = models.DateTimeField(default=timezone.now())
+    title = models.CharField(max_length=512)
     #20: titulo, contenido, autor, fecha de publicacion, fecha del ultimo cambio y etiquetas
+
+    def __unicode__(self):
+        return self.title

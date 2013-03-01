@@ -1,13 +1,16 @@
 from django.contrib.auth.decorators import login_required
-from django.views.generic import FormView, ListView, TemplateView, CreateView, DetailView
+from django.views.generic import FormView, ListView, TemplateView, CreateView, DetailView, ArchiveIndexView
 from django.http import HttpResponseRedirect
 from cafeblog.forms import NewBlogForm
 from cafeblog.models import Blog
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 
 from cafeblog.forms import SignUpForm
+
+
+ARTICLE_PAGINATE_BY = 5
 
 
 class Index(TemplateView):
@@ -68,3 +71,16 @@ class BlogList(ListView):
     paginate_by = 10
     template_name = 'cafeblog/blogs_list.html'
 blogs_list = login_required(BlogList.as_view())
+
+
+class PaginatePostList(ArchiveIndexView):
+    paginate_by = ARTICLE_PAGINATE_BY
+    date_field = 'pub_date'
+    template_name = 'cafeblog/blog_archive.html'
+    allow_empty = True
+
+    def get_queryset(self):
+        b = get_object_or_404(Blog, pk=self.kwargs['blog_pk'])
+        return b.post_set.all().order_by('-pub_date')
+
+archive = PaginatePostList.as_view()
