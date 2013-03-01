@@ -12,9 +12,14 @@
     {{ blog.description }}
 </p>
 
+
+{% if user in blog.authors.all %}
 <p>
     <a class="btn btn-large" href="{% url 'cafeblog:new_article' blog.pk %}">New article</a>
 </p>
+{% endif %}
+
+
 
 {% endblock %}
 

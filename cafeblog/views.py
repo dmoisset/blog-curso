@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
@@ -96,6 +97,9 @@ def edit_article(request, blog_pk, article_pk=None):
     if blog_pk is None:
         raise Http404(u"No blog specified.")
     blog = get_object_or_404(Blog, pk=blog_pk)
+    author = User.objects.get(pk=request.user.pk)
+    if author != blog.administrator and author not in blog.authors.all():
+        raise PermissionDenied
 
     article = None
     if article_pk:
