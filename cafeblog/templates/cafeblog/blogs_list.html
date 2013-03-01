@@ -11,7 +11,7 @@
     <table class="table table-bordered">
         {% for blog in blogs_list %}
             <tr>
-                <td><strong>{{ blog.title }}</strong></td>
+                <td><strong><a href='{% url "cafeblog:detail" blog.pk %}'>{{ blog.title }}</a></strong></td>
                 <td>
                     {% if blog.administrator == user %}
                         <span class="text-success">Administrator.</span>
