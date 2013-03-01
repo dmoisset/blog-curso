@@ -78,13 +78,13 @@ blogs_list = login_required(BlogList.as_view())
 
 class PaginateArticleList(ArchiveIndexView):
     paginate_by = ARTICLE_PAGINATE_BY
-    date_field = 'pub_date'
+    date_field = 'creation_time'
     template_name = 'cafeblog/blog_archive.html'
     allow_empty = True
 
     def get_queryset(self):
         b = get_object_or_404(Blog, pk=self.kwargs['blog_pk'])
-        return b.article_set.all().order_by('-pub_date')
+        return b.article_set.all().order_by('-creation_time')
 
 archive = PaginateArticleList.as_view()
 
