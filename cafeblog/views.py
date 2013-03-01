@@ -1,12 +1,14 @@
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.views.generic import FormView, ListView, TemplateView, CreateView, DetailView
-from django.http import HttpResponseRedirect
-from cafeblog.forms import NewBlogForm
-from cafeblog.models import Blog
+from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
+from django.template.response import TemplateResponse
 
+from cafeblog.forms import NewBlogForm, ArticleForm
+from cafeblog.models import Blog, Article
 from cafeblog.forms import SignUpForm
 
 
@@ -67,3 +69,58 @@ class BlogList(ListView):
     context_object_name = 'blogs_list'
     template_name = 'cafeblog/blogs_list.html'
 blogs_list = login_required(BlogList.as_view())
+
+
+
+@login_required
+def edit_article(request, blog_pk, article_pk=None):
+    if blog_pk is None:
+        raise Http404(u"No blog specified.")
+    blog = get_object_or_404(Blog, pk=blog_pk)
+
+    article = None
+    if article_pk:
+        article = get_object_or_404(Article, pk=article_pk)
+        # TODO: check permissions and authoring
+        #if article.created_by != request.user:
+        #    raise PermissionDenied
+
+    if request.method == "POST":
+        article_form = ArticleForm(request.POST, instance=article)
+        if article_form.is_valid():
+            author = User.objects.get(pk=request.user.pk)
+            now = timezone.now()
+            publish = article_form.cleaned_data['is_published']
+            article = Article(
+                    blog = blog,
+                    title = article_form.cleaned_data['title'],
+                    contents = article_form.cleaned_data['contents'],
+                    creation_time = now,
+                    last_modified = now,
+                    is_published = publish,
+                    author = author,
+                )
+            if publish:
+                article.pub_date = now
+            else:
+                article.pub_date = ''
+            article.save()
+            # TODO: check that it doesn't exist before adding.
+            blog.article_set.add(article)
+            author.article_set.add(article)
+            return redirect('cafeblog:article_detail', blog_pk=blog.pk, article_pk=article.pk)
+    else:
+        article_form = ArticleForm(instance=article)
+    #
+    return TemplateResponse(
+            request,
+            "cafeblog/article_detail.html", 
+            {'blog':blog, "article_form":article_form}
+        )
+
+
+class ArticleDetail(TemplateView):
+    template_name = 'cafeblog/article_detail.html'
+# TODO: login required
+article_detail = ArticleDetail.as_view()
+
