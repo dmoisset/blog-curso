@@ -1,3 +1,7 @@
+# root(arg) --> append arg (wich should be a relative path) to the root directory of the project
+import os
+root = lambda * x: os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), *x)
+
 # Django settings for cafeblog_com project.
 
 DEBUG = False
@@ -45,7 +49,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = root('media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -161,6 +165,9 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 LOGIN_URL = "/login/"
 LOGOUT_URL = "/logout/"
 LOGIN_REDIRECT_URL = "/"
+
+# Profile setting
+AUTH_PROFILE_MODULE = 'cafeblog.UserProfile'
 
 INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
