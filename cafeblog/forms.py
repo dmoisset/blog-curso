@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
+from django.forms import ModelForm
+from models import UserProfile
 from django import forms
 from cafeblog.models import Blog, Article
 from django.contrib.auth.models import User
+
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('name', 'last_name', 'biography', 'photo')
 
 
 class SignUpForm(forms.ModelForm):

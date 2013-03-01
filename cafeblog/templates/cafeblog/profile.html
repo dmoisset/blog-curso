@@ -1,0 +1,21 @@
+{% extends "cafeblog/base.html" %}
+{% load url from future %}
+
+{% block title %} Profile! {% endblock %}
+
+{% block body %}
+
+
+      <table class="table profile-table" style="border:1">
+        <tr><th>Name</th><td rowspan="4"><img width="100" height="100"
+            class="img-polaroid" src="/media/{{user.get_profile.photo.name}}"
+            alt="No image available" /> </td></tr>
+        <tr><td>{{ user.get_profile.name }}</td></tr> 
+        <tr><th>Last Name</th></tr>
+        <tr><td>{{ user.get_profile.last_name}}</td></tr> 
+        <tr><th>Biography</th></tr>
+        <tr><td>{{ user.get_profile.biography}}</td></tr> 
+      </table>
+      <a class="btn btn-primary" href="{% url 'cafeblog:profile_create_edit' %}">Edit</a>   
+
+{% endblock %}

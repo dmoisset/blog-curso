@@ -1,16 +1,17 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render_to_response
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.views.generic import FormView, ListView, TemplateView, CreateView, DetailView, ArchiveIndexView
 from django.db import IntegrityError
+from django.template import RequestContext
 
-from cafeblog.forms import NewBlogForm, ArticleForm
-from cafeblog.models import Blog, Article
+from cafeblog.forms import NewBlogForm, ArticleForm, ProfileForm
+from cafeblog.models import Blog, Article, UserProfile
 from cafeblog.forms import SignUpForm
 
 
@@ -21,6 +22,33 @@ class Index(TemplateView):
     template_name = 'cafeblog/index.html'
 index = Index.as_view()
 
+
+@login_required
+def profile(request):
+    try:
+        user_profile = request.user.get_profile()
+        return render_to_response('cafeblog/profile.html',
+                                  {'user_profile': user_profile, },
+                                  context_instance=RequestContext(request),)
+    except ObjectDoesNotExist:
+        redirect('cafeblog:profile_create_edit')
+
+@login_required
+def profile_create_edit(request):
+    try:
+        user_profile = request.user.get_profile()
+    except ObjectDoesNotExist:
+        user_profile = UserProfile(user=request.user)
+    if request.method == 'POST':
+        profile_form = ProfileForm(request.POST, request.FILES, instance=user_profile, label_suffix='')
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('cafeblog:profile')
+    elif request.method == 'GET':
+        profile_form = ProfileForm(instance=user_profile, label_suffix='')
+    return render_to_response('cafeblog/profile_edit.html',
+                  {'profile_form': profile_form, },
+                  context_instance=RequestContext(request))
 
 class NewBlog(CreateView):
     pk_url_kwarg = 'blog_pk'

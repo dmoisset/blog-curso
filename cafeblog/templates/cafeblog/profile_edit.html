@@ -1,0 +1,15 @@
+{% extends "cafeblog/base.html" %}
+{% load url from future %}
+
+{% block title %} Profile! {% endblock %}
+
+{% block body %}
+
+    <form class="form profile-form" method="post" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ profile_form.as_p }}
+      <input class="btn btn-primary" type="submit" value="Save" />
+    </form>
+
+{% endblock %}
+

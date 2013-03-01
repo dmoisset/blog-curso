@@ -1,4 +1,36 @@
+img[alt="Cafe Blog"] 
+{  margin-top: 90px;
+}
 
+textarea[name="biography"]
+{   width: 530px;
+}
+
+p > label 
+{   display: block;
+}
+
+span.help-inline
+{   bottom: -22px;
+    left: -210px;
+    position: relative;
+}
+
+div.alert-success
+{   margin-top: 30px;
+}
+
+form.login-form 
+{   margin-top: 30px;
+}
+
+label.checkbox[for$="DELETE"]
+{   left: 210px;
+}
+
+input[id$="DELETE"]
+{   display: none;
+}
 
 div.alert
 {   margin-top: 45px;
@@ -40,15 +72,52 @@ li {
 
 .image{
     position: relative;
-    margin-bottom: 20px;
-    width: 100%;
+    top: -55px;
 }
+
+.profile-table 
+{   margin-top: 40px;
+    width: 600px;
+}
+
+.profile-table td 
+{   color: graytext;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.profile-table td:first-child 
+{   width: 65%;
+}
+
+.img-polaroid
+{   width: 192px;
+}
+
+label[for|="photo"]
+{   left: 263px;
+    position: relative;
+    top: -20px;
+}
+
+
+input[name|="photo"] {
+    left: 17px;
+    position: relative;
+    top: -3px;
+}
+
+.profile-form {
+    margin-top: 30px;
+}
+
 h2{
     position: absolute;
     top: 380px;
     left: 0;
     width: 100%;
 }
+
 h2 span{
     color: white;
     font: bold 40px/75px Helvetica, Sans-Serif;

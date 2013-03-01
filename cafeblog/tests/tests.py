@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from model_factories import UserFactory, BlogFactory
+from model_factories import UserFactory, ProfileFactory, BlogFactory
 from django.core.exceptions import ObjectDoesNotExist
 from django.test.client import RequestFactory
 from cafeblog.views import edit_article, NO_UNIQUE_TITLE_ERROR
@@ -9,6 +9,7 @@ from cafeblog.models import Article
 from django.utils import timezone
 from mock import patch
 import datetime
+from cafeblog.models import UserProfile
 
 
 def clear_db():
@@ -28,14 +29,27 @@ class CafeBlogViewsTest(TestCase):
         user_default.set_password(self.password_default)
         user_default.save()
 
+
+class IndexViewTest(TestCase):
     def test_get_index_view(self):
+        """
+        Testing views index.
+        Check Status Code 200
+        Check Template Used index.html
+        """
         url = reverse('cafeblog:index')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'cafeblog/index.html')
 
+
+class SignUpViewsTest(TestCase):
     def test_post_sign_up_view(self):
+        """
+        Testing POST signup views.
+        Check add only one user and redirect to login template.
+        """
         url = reverse('cafeblog:signup')
         post_data = {'username': u'usuario_test',
                      'email': u'usuario_test@gmail.com',
@@ -44,16 +58,15 @@ class CafeBlogViewsTest(TestCase):
                      }
         users_count = User.objects.all().count()
         response = self.client.post(url, post_data)
-
         url = reverse('cafeblog:login')
         self.assertRedirects(response, url)
         self.assertEqual(User.objects.all().count(), users_count + 1)
 
-        user = User.objects.all().order_by('-pk')[0]
-        self.assertEqual(user.username, u'usuario_test')
-        self.assertEqual(user.email, u'usuario_test@gmail.com')
-
     def test_post_error_username_sign_up_view(self):
+        """
+        Testing POST signup views.
+        Check not add user if username is not exist.
+        """
         url = reverse('cafeblog:signup')
         post_data = {
                      'email': u'usuario_test@gmail.com',
@@ -65,6 +78,12 @@ class CafeBlogViewsTest(TestCase):
         self.assertEqual(User.objects.all().count(), users_count)
 
     def test_post_error_password_sign_up_view(self):
+        """
+        Testing POST signup views.
+        Check not add user if paswords not match.
+        """
+        self.client.logout()
+
         url = reverse('cafeblog:signup')
         post_data = {'username': u'usuario_test',
                      'email': u'usuario_test@gmail.com',
@@ -76,6 +95,10 @@ class CafeBlogViewsTest(TestCase):
         self.assertEqual(User.objects.all().count(), users_count)
 
     def test_post_error_email_sign_up_view(self):
+        """
+        Testing POST signup views.
+        Check not add user if string format of email is incorrect .
+        """
         url = reverse('cafeblog:signup')
         post_data = {'username': u'usuario_test',
                      'email': u'usuario_testQgmail.com',
@@ -86,13 +109,23 @@ class CafeBlogViewsTest(TestCase):
         self.client.post(url, post_data)
         self.assertEqual(User.objects.all().count(), users_count)
 
-    ######################################
-    # Testing views when user is logged in
-    ######################################
+
+class BlogListViewsTest(TestCase):
+    def setUp(self):
+        """
+        Create a logged in user
+        """
+        self.logged_user = UserFactory(password='testpass')
+        self.client.login(username=self.logged_user.username,
+                          password='testpass')
 
     def test_get_blogs_list_view(self):
-        self.client.login(username=self.username_default, password=self.password_default)
-
+        """
+        Testing views blogs_list when user is logged in.
+        Check Status Code 200
+        Check Template Used blogs_list.html
+        Check Response Contains 'Were not found blogs.'
+        """
         url = reverse('cafeblog:blogs_list')
         response = self.client.get(url)
 
@@ -100,12 +133,12 @@ class CafeBlogViewsTest(TestCase):
         self.assertTemplateUsed(response, 'cafeblog/blogs_list.html')
         self.assertContains(response, 'Were not found blogs.')
 
-
-     ######################################
-    # Testing views when user is not logged in
-    ######################################
-
     def test_get_not_logged_blogs_list_view(self):
+        """
+        Testing views blogs_list when user is not logged in.
+        Check redirect.
+        """
+        self.client.logout()
         url = reverse('cafeblog:blogs_list')
         response = self.client.get(url)
 
@@ -326,3 +359,35 @@ class NewArticleViewTest(TestCase):
             edit_article(req, self.blog.pk)
         art = self.logged_user.article_set.get(title='Test article')
         self.assertEquals(art.creation_time, now)
+
+
+class ProfileViewTest(TestCase):
+    username_default = "default"
+    password_default = "password"
+
+    def setUp(self):
+        """
+        Create a logged in user
+        """
+        self.logged_user = UserFactory(password=self.password_default)
+        self.client.login(username=self.logged_user.username,
+                          password=self.password_default)
+
+    def test_user_has_profile(self):
+        """ Every user must have an associated profile
+        """
+        user = User.objects.create(username="myuser")
+        user.save()
+        self.assertIsInstance(user.get_profile(), UserProfile)
+
+    def test_get_profile_view(self):
+        """Logged-in user accessing cafeblog:profile is shown cafeblog/profile.html"""
+        url = reverse('cafeblog:profile')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'cafeblog/profile.html')
+
+    def tearDown(self):
+        self.client.logout()
+        clear_db()
+        UserProfile.objects.all().delete()
