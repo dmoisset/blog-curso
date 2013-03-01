@@ -5,11 +5,21 @@
 {% block body %}
 <div class="hero-unit">
     <h1>{{ blog }} <small>by {{ blog.administrator }}</small></h1>
+	<p><a href="{% url 'cafeblog:archive' blog.pk %}">All articles</a></p>
 </div>
 
 <p>
     {{ blog.description }}
 </p>
+
+
+{% if user in blog.authors.all %}
+<p>
+    <a class="btn btn-large" href="{% url 'cafeblog:new_article' blog.pk %}">New article</a>
+</p>
+{% endif %}
+
+
 
 {% endblock %}
 

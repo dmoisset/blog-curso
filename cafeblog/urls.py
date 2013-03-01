@@ -28,8 +28,9 @@ urlpatterns = patterns('',
     # Blogs management
     url(r'^new_blog/$', views.new_blog, name='new_blog'),
     url(r'^(?P<blog_pk>\d+)/$', views.detail, name='detail'),
+    url(r'^(?P<blog_pk>\d+)/archive/$', views.archive, name='archive'),
+
     # Posts management
     url(r'^(?P<blog_pk>\d+)/new_article/$', views.edit_article, name='new_article'),
-    #url(r'^(?P<blog_pk>\d+)/articles/$', views.articles_list, name='articles_list'),
-    url(r'^(?P<blog_pk>\d+)/articles/(?P<article_pk>\d+)$', views.article_detail, name='article_detail'),
+    url(r'^(?P<blog_pk>\d+)/articles/(?P<article_pk>\d+)/$', views.article_detail, name='article_detail'),
 )
