@@ -28,10 +28,10 @@ def profile(request):
                                   {'user_profile': user_profile, },
                                   context_instance=RequestContext(request),)
     except ObjectDoesNotExist:
-        redirect('cafeblog:profile_edit')
+        redirect('cafeblog:profile_create_edit')
 
 @login_required
-def profile_edit(request):
+def profile_create_edit(request):
     try:
         user_profile = request.user.get_profile()
     except ObjectDoesNotExist:

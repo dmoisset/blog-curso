@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from model_factories import UserFactory, BlogFactory
+from model_factories import UserFactory, ProfileFactory, BlogFactory
+from cafeblog.models import UserProfile
 
 
 def clear_db():
@@ -161,3 +162,40 @@ class NewBlogViewTest(TestCase):
 
     def tearDown(self):
         clear_db()
+
+
+class ProfileViewTest(TestCase):
+    username_default = "default"
+    password_default = "password"
+
+    def setUp(self):
+        """
+        Create a logged in user
+        """
+        self.logged_user = UserFactory(password=self.password_default)
+        self.client.login(username=self.logged_user.username,
+                          password=self.password_default)
+
+    def test_user_has_profile(self):
+        """ Every user must have an associated profile
+        """
+        user = User.objects.create(username="myuser")
+        user.save()
+        self.assertIsInstance(user.get_profile(), UserProfile)
+
+    #"Uso el template cafeblog/profile.html"
+
+    def test_get_profile_view(self):
+
+        url = reverse('cafeblog:profile')
+        response = self.client.get(url)
+
+        print response
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'cafeblog/profile.html')
+
+
+    def tearDown(self):
+        self.client.logout()
+        clear_db()
+        UserProfile.objects.all().delete()
