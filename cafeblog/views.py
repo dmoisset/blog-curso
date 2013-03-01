@@ -1,16 +1,13 @@
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import FormView, ListView, TemplateView, CreateView, DetailView
 from django.http import HttpResponseRedirect
 from cafeblog.forms import NewBlogForm
 from cafeblog.models import Blog
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.views.generic import FormView, TemplateView, ListView
 
 from cafeblog.forms import SignUpForm
-from cafeblog.models import Blog
 
 
 class Index(TemplateView):
