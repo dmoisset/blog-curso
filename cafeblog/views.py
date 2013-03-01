@@ -126,6 +126,7 @@ def edit_article(request, blog_pk, article_pk=None):
                     author = author,
                 )
             try:
+                #import pdb; pdb.set_trace()
                 article.save()
                 blog.article_set.add(article)
                 author.article_set.add(article)
@@ -138,7 +139,7 @@ def edit_article(request, blog_pk, article_pk=None):
     #
     return TemplateResponse(
             request,
-            "cafeblog/article_form.html", 
+            "cafeblog/article_form.html",
             {'blog_pk':blog.pk, 'blog':blog, "article_form":article_form}
         )
 
@@ -146,17 +147,15 @@ def edit_article(request, blog_pk, article_pk=None):
 def article_detail(request, blog_pk, article_pk):
     #TODO: check blog_pk and article_pk corresponds
     article = get_object_or_404(Article, pk=article_pk)
-    
+
     # TODO: check permissions and authoring
     #if article.created_by != request.user:
     #    raise PermissionDenied
 
     if request.method == "GET":
         article_form = ArticleForm(instance=article)
-    #
-    print "a ver", article_form
     return TemplateResponse(
             request,
-            "cafeblog/article_detail.html", 
+            "cafeblog/article_detail.html",
             {"article":article}
         )
