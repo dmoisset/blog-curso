@@ -33,5 +33,6 @@ urlpatterns = patterns('',
     url(r'^new_blog/$', views.new_blog, name='new_blog'),
     url(r'^new_blog/$', views.new_blog, name='new_blog'),
     url(r'^(?P<blog_pk>\d+)/$', views.detail, name='detail'),
+    url(r'^(?P<blog_pk>\d+)/archive/$', views.archive, name='archive'),
 
 )
