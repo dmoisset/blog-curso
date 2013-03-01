@@ -1,7 +1,6 @@
 import factory
-from cafeblog.models import Blog
+from cafeblog.models import Blog, UserProfile
 from django.contrib.auth.models import User
-
 
 class UserFactory(factory.Factory):
     FACTORY_FOR = User
@@ -22,6 +21,14 @@ class UserFactory(factory.Factory):
             if create:
                 user.save()
         return user
+
+
+class ProfileFactory(factory.Factory):
+    FACTORY_FOR = UserProfile
+    user = factory.SubFactory(UserFactory)
+    name = factory.Sequence(lambda n: 'name{0}'.format(n))
+    last_name = factory.Sequence(lambda n: 'lastname{0}'.format(n))
+    biography = factory.Sequence(lambda a: 'I like to {0} and {0} and {0} and then {0} some more'.format(a))
 
 
 class BlogFactory(factory.Factory):

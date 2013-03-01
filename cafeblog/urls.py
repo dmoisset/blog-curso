@@ -6,7 +6,7 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
 
     url(r'^profile/$', views.profile, name='profile'),
-    url(r'^profile_edit/$', views.profile_edit, name='profile_edit'),
+    url(r'^profile_create_edit/$', views.profile_create_edit, name='profile_create_edit'),
 
     url(r'signup/$', views.signup, name='signup'),
     url(r'blogs_list/$', views.blogs_list, name='blogs_list'),
