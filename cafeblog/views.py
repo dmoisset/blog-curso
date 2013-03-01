@@ -65,5 +65,6 @@ class BlogList(ListView):
     def get_queryset(self, **kwargs):
         return Blog.objects.filter(authors=self.request.user)
     context_object_name = 'blogs_list'
+    paginate_by = 10
     template_name = 'cafeblog/blogs_list.html'
 blogs_list = login_required(BlogList.as_view())
