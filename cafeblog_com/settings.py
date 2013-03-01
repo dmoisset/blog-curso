@@ -97,9 +97,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'cafeblog_com.urls'
@@ -122,7 +119,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
-    'debug_toolbar',
     'django_nose',
     'bootstrap_toolkit',
     'django.contrib.admin',
@@ -158,8 +154,6 @@ LOGGING = {
     }
 }
 
-INTERNAL_IPS = ('127.0.0.1',)  # Required by debug_toolbar
-
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 LOGIN_URL = "/login/"
@@ -169,10 +163,9 @@ LOGIN_REDIRECT_URL = "/"
 # Profile setting
 AUTH_PROFILE_MODULE = 'cafeblog.UserProfile'
 
-INTERNAL_IPS = ('127.0.0.1',)
-DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 try:
     from local_settings import *
 except ImportError:
-    pass
+    print "You may want to set a local_setting.py, in order to have the "\
+            "database and EMAIL configuration."
