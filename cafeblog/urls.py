@@ -32,5 +32,5 @@ urlpatterns = patterns('',
 
     # Posts management
     url(r'^(?P<blog_pk>\d+)/new_article/$', views.edit_article, name='new_article'),
-    url(r'^(?P<blog_pk>\d+)/articles/(?P<article_pk>\d+)$', views.article_detail, name='article_detail'),
+    url(r'^(?P<blog_pk>\d+)/articles/(?P<article_pk>\d+)/$', views.article_detail, name='article_detail'),
 )

@@ -27,10 +27,13 @@ class Article(models.Model):
     contents = models.TextField()
     author = models.ForeignKey(User)
     creation_time = models.DateTimeField()
-    pub_date = models.DateTimeField("date published", blank=True)
+    pub_date = models.DateTimeField("date published", blank=True, null=True)
     last_modified = models.DateTimeField()
     is_published = models.BooleanField()
-    #20: titulo, contenido, autor, fecha de publicacion, fecha del ultimo cambio y etiquetas
+
+    def __unicode__(self):
+        return self.title
+
     class Meta:
         ordering = ['-pub_date']
         order_with_respect_to = 'blog'

@@ -9,17 +9,18 @@
 <form method="post">
     {% csrf_token %}
     <div class="hero-unit">
-        <h1>Article details<br />
-            <small>posted on the blog: {{ blog }}</small>
+        <h1>{{ article.title }}<br />
+            <small>posted on the blog: {{ article.blog }}</small>
         </h1>
     </div>
     
     <div>
-        {% display_error_if  article_form.errors %}
-        {{ article_form.errors }}
-        {{ article_form.as_p }}
-
-        <button class="btn btn-primary btn-large" type="submit" value="save">Save article</button>
+        <p> contents: {{ article.contents }}</p>
+        <p> author: {{ article.author }}</p>
+        <p> creation_time: {{ article.creation_time }}</p>
+        <p> date published: {{ article.pub_date }}</p>
+        <p> last modified: {{ article.last_modified }}</p>
+        <p> is it published? : {{ article.is_published }}</p>
     </div>
     
 </form>
